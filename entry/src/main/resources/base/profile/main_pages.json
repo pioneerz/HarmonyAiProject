@@ -1,0 +1,10 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/TextToSpeechPage",
+    "pages/SpeechRecognitionPage",
+    "pages/TextRecognitionPage",
+    "pages/TextRecognitionCameraPage",
+    "pages/CameraPage"
+  ]
+}

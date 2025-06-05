@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "app_name",
+      "value": "AIProject"
+    },
+    {
+      "name": "micro_permission",
+      "value": "申请麦克风权限"
+    },
+    {
+      "name": "camera_permission",
+      "value": "申请相机权限"
+    }
+  ]
+}
