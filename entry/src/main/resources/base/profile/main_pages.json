@@ -5,6 +5,7 @@
     "pages/SpeechRecognitionPage",
     "pages/TextRecognitionPage",
     "pages/TextRecognitionCameraPage",
-    "pages/CameraPage"
+    "pages/CameraPage",
+    "pages/MineSweeperPage"
   ]
 }

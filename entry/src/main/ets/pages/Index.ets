@@ -55,6 +55,17 @@ struct Index {
             url: 'pages/TextRecognitionCameraPage'
           })
         })
+
+      Button("扫雷")
+        .width('80%')
+        .height(60)
+        .margin({ top: 10 })
+        .onClick(() => {
+          router.pushUrl({
+            url: "pages/MineSweeperPage"
+          }).catch(() => {
+          })
+        })
     }
     .height('100%')
     .width('100%')

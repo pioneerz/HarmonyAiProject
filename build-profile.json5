@@ -5,13 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "C:\\Users\\user\\.ohos\\config\\default_AIProject_z4Awde4SCTX_G-kwlrmICRw9kcxONbswz9G3lTBRbPU=.cer",
+          "certpath": "C:\\Users\\User\\.ohos\\config\\default_HarmonyAiProject_G7ilW7y74AAbnOO7Cm5k0UgoZVSsBxpuG-48Rq_fYeU=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B2A2F284E85DBF01EFC23BB09479B1F41669D1E01BBA9CEA9A0F365060D10718D2D13524DB3729E",
-          "profile": "C:\\Users\\user\\.ohos\\config\\default_AIProject_z4Awde4SCTX_G-kwlrmICRw9kcxONbswz9G3lTBRbPU=.p7b",
+          "keyPassword": "0000001B7961A16E08552AC71BE989CDF8659A4C1782943AF6DC0ABD6F6DE571DEF8CBBE7052E86C6F71F6",
+          "profile": "C:\\Users\\User\\.ohos\\config\\default_HarmonyAiProject_G7ilW7y74AAbnOO7Cm5k0UgoZVSsBxpuG-48Rq_fYeU=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:\\Users\\user\\.ohos\\config\\default_AIProject_z4Awde4SCTX_G-kwlrmICRw9kcxONbswz9G3lTBRbPU=.p12",
-          "storePassword": "0000001BB4274E0CDFFECCCDAF78128323848377744DD0E06EE7F0AEAA4C19B4CBDB744829E1B747F278A7"
+          "storeFile": "C:\\Users\\User\\.ohos\\config\\default_HarmonyAiProject_G7ilW7y74AAbnOO7Cm5k0UgoZVSsBxpuG-48Rq_fYeU=.p12",
+          "storePassword": "0000001B36FCA1452CB8E4DBB85B1027B1BFB09C709358FCC5D1BD086A9C232E4D9193EFAD3E39C834FF3F"
         }
       }
     ],
@@ -26,7 +26,8 @@
             "caseSensitiveCheck": true,
             "useNormalizedOHMUrl": true
           }
-        }
+        },
+        "targetSdkVersion": "6.0.0(20)"
       }
     ],
     "buildModeSet": [
