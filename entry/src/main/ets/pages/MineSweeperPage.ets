@@ -8,7 +8,7 @@ struct MineSweeperPage {
   @Local mineTotalCount: number = 10
   @Local revealedCellList: Set<string> = new Set()
   startTime: number = Date.now()
-  isGameOver: boolean = false // 游戏结束标志
+  isGameOver: boolean = false  // 游戏结束标志
   @Local mineCellSize: number = 30
   cellMargin: number = 1
 
