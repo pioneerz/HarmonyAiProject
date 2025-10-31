@@ -7,10 +7,13 @@ struct MineSweeperPage {
   @Local gamePanelList: MineCell[][] = []
   @Local mineTotalCount: number = 10
   @Local revealedCellList: Set<string> = new Set()
-  startTime: number = Date.now()
-  isGameOver: boolean = false  // 游戏结束标志
   @Local mineCellSize: number = 30
+  startTime: number = Date.now()
+  isGameOver: boolean = false // 游戏结束标志
   cellMargin: number = 1
+  totalRow: number = 10
+  totalCol: number = 10
+  @Local isSetCustomDifficulty: boolean = false
 
   aboutToAppear(): void {
     this.resetGame()
@@ -18,6 +21,168 @@ struct MineSweeperPage {
 
   build() {
     Column() {
+      Row() {
+        Text("重新开始")
+          .fontSize(18)
+          .fontColor(Color.White)
+          .backgroundColor(Color.Blue)
+          .borderRadius(10)
+
+          .padding({
+            left: 20,
+            right: 20,
+            top: 8,
+            bottom: 8
+          })
+          .onClick(() => {
+            this.resetGame()
+          })
+
+        Text("自定义难度")
+          .fontSize(18)
+          .fontColor(Color.White)
+          .backgroundColor(Color.Blue)
+          .borderRadius(10)
+          .margin({ left: 24 })
+          .padding({
+            left: 20,
+            right: 20,
+            top: 8,
+            bottom: 8
+          })
+          .onClick(() => {
+            this.isSetCustomDifficulty = true
+          })
+      }
+      .width('100%')
+      .justifyContent(FlexAlign.Center)
+      .margin({ top: 20 })
+
+      if (this.isSetCustomDifficulty) {
+        Row() {
+          Row() {
+            Text("行数:")
+              .fontSize(16)
+              .fontColor(Color.Black)
+            TextInput({
+              placeholder: "",
+              text: `${this.totalRow}`
+            })
+              .layoutWeight(1)
+              .height("100%")
+              .defaultFocus(true)
+              .placeholderColor('#c5c5c5')
+              .placeholderFont({
+                size: 13
+              })
+              .fontColor(Color.Black)
+              .fontSize(14)
+              .enterKeyType(EnterKeyType.Done)
+              .backgroundColor(Color.White)
+              .margin({ left: 6, right: 6 })
+              .padding({
+                left: 2,
+                right: 2,
+                top: 1,
+                bottom: 0
+              })
+              .type(InputType.Number)
+              .onSubmit((enterKey: EnterKeyType, event: SubmitEvent) => {
+                this.totalRow = Number(event.text)
+              })
+          }
+          .height(30)
+          .layoutWeight(1)
+
+          Row() {
+            Text("列数:")
+              .fontSize(16)
+              .fontColor(Color.Black)
+            TextInput({
+              placeholder: "",
+              text: `${this.totalCol}`
+            })
+              .layoutWeight(1)
+              .height("100%")
+              .defaultFocus(true)
+              .placeholderColor('#c5c5c5')
+              .placeholderFont({
+                size: 13
+              })
+              .fontColor(Color.Black)
+              .fontSize(14)
+              .enterKeyType(EnterKeyType.Done)
+              .backgroundColor(Color.White)
+              .margin({ left: 6, right: 6 })
+              .padding({
+                left: 2,
+                right: 2,
+                top: 1,
+                bottom: 0
+              })
+              .type(InputType.Number)
+              .onSubmit((enterKey: EnterKeyType, event: SubmitEvent) => {
+                this.totalCol = Number(event.text)
+              })
+          }
+          .height(30)
+          .layoutWeight(1)
+
+          Row() {
+            Text("炸弹:")
+              .fontSize(16)
+              .fontColor(Color.Black)
+            TextInput({
+              placeholder: "",
+              text: `${this.mineTotalCount}`
+            })
+              .layoutWeight(1)
+              .height("100%")
+              .defaultFocus(true)
+              .placeholderColor('#c5c5c5')
+              .placeholderFont({
+                size: 13
+              })
+              .fontColor(Color.Black)
+              .fontSize(14)
+              .enterKeyType(EnterKeyType.Done)
+              .backgroundColor(Color.White)
+              .margin({ left: 6, right: 6 })
+              .padding({
+                left: 2,
+                right: 2,
+                top: 1,
+                bottom: 0
+              })
+              .type(InputType.Number)
+              .onSubmit((enterKey: EnterKeyType, event: SubmitEvent) => {
+                this.mineTotalCount = Number(event.text)
+              })
+          }
+          .height(30)
+          .layoutWeight(1)
+
+          Text("确定")
+            .fontSize(16)
+            .fontColor(Color.White)
+            .backgroundColor(Color.Red)
+            .borderRadius(6)
+            .padding({
+              left: 12,
+              right: 12,
+              top: 6,
+              bottom: 6
+            })
+            .onClick(() => {
+              this.resetGame()
+              this.isSetCustomDifficulty = false
+            })
+        }
+        .width('100%')
+        .margin({ top: 16 })
+        .padding({ left: 10, right: 10 })
+      }
+
       Flex({ wrap: FlexWrap.Wrap }) {
         ForEach(this.gamePanelList, (rowCell: MineCell[], rowIndex) => {
           ForEach(rowCell, (cell: MineCell, colIndex) => {
@@ -47,51 +212,9 @@ struct MineSweeperPage {
           })
         })
       }
-      .width(`${(this.mineCellSize + this.cellMargin * 2) * this.mineTotalCount}`)
+      .width(`${(this.mineCellSize + this.cellMargin * 2) * this.totalRow}`)
       .margin({ top: 16 })
 
-      Text("重新开始")
-        .fontSize(18)
-        .fontColor(Color.White)
-        .backgroundColor(Color.Blue)
-        .borderRadius(10)
-        .margin({ top: 20 })
-        .padding({
-          left: 20,
-          right: 20,
-          top: 5,
-          bottom: 5
-        })
-        .onClick(() => {
-          this.resetGame()
-        })
-
-      Text("难度升级")
-        .fontSize(18)
-        .fontColor(Color.White)
-        .backgroundColor(Color.Blue)
-        .borderRadius(10)
-        .margin({ top: 20 })
-        .padding({
-          left: 20,
-          right: 20,
-          top: 5,
-          bottom: 5
-        })
-        .onClick(() => {
-          if (this.mineTotalCount >= 20) {
-            this.mineTotalCount = 10
-          } else {
-            this.mineTotalCount++
-          }
-          this.resetGame()
-        })
-
-      Text(`当前难度升级：${this.mineTotalCount}颗炸弹 ${this.mineTotalCount == 20 ? "\n达到最大难度等级" : ""}`)
-        .fontColor(Color.Red)
-        .fontSize(20)
-        .margin({ top: 8 })
-        .textAlign(TextAlign.Center)
     }
     .width('100%')
     .height('100%')
@@ -132,7 +255,7 @@ struct MineSweeperPage {
             }
             let newRow = rowIndex + rowX
             let newCol = colIndex + colY
-            if (newRow >= 0 && newRow < this.mineTotalCount && newCol >= 0 && newCol < this.mineTotalCount) {
+            if (newRow >= 0 && newRow < this.totalRow && newCol >= 0 && newCol < this.totalCol) {
               this.revealCell(newRow, newCol)
             }
           }
@@ -183,7 +306,7 @@ struct MineSweeperPage {
   resetGame() {
     try {
       this.mineCellSize = (this.getUIContext().px2vp(display.getDefaultDisplaySync().width) - 10 -
-        this.mineTotalCount * this.cellMargin * 2) / this.mineTotalCount
+        this.totalRow * this.cellMargin * 2) / this.totalRow
       this.isGameOver = false
       this.startTime = Date.now()
       this.revealedCellList.clear()
@@ -197,9 +320,9 @@ struct MineSweeperPage {
    */
   createGamePanel() {
     this.gamePanelList = []
-    for (let index = 0; index < this.mineTotalCount; index++) {
+    for (let index = 0; index < this.totalRow; index++) {
       this.gamePanelList.push([])
-      for (let j = 0; j < this.mineTotalCount; j++) {
+      for (let j = 0; j < this.totalCol; j++) {
         this.gamePanelList[index].push(new MineCell(index, j))
       }
     }
@@ -213,8 +336,8 @@ struct MineSweeperPage {
   setMines() {
     let mineCount: number = 0
     while (mineCount < this.mineTotalCount) {
-      let mineX = Math.floor(Math.random() * this.mineTotalCount)
-      let mineY = Math.floor(Math.random() * this.mineTotalCount)
+      let mineX = Math.floor(Math.random() * this.totalRow)
+      let mineY = Math.floor(Math.random() * this.totalCol)
       if (!this.gamePanelList[mineX][mineY].isMine) {
         this.gamePanelList[mineX][mineY].isMine = true
         mineCount++
@@ -226,8 +349,8 @@ struct MineSweeperPage {
    * 计算每格显示的值
    */
   calcValue() {
-    for (let index = 0; index < this.mineTotalCount; index++) {
-      for (let j = 0; j < this.mineTotalCount; j++) {
+    for (let index = 0; index < this.totalRow; index++) {
+      for (let j = 0; j < this.totalCol; j++) {
         if (this.gamePanelList[index][j].isMine) {
           this.gamePanelList[index][j].value = "雷"
         } else {
@@ -253,7 +376,7 @@ struct MineSweeperPage {
         }
         let newRow = index + rowX
         let newCol = j + colY
-        if (newRow >= 0 && newRow < this.mineTotalCount && newCol >= 0 && newCol < this.mineTotalCount &&
+        if (newRow >= 0 && newRow < this.totalRow && newCol >= 0 && newCol < this.totalCol &&
         this.gamePanelList[newRow][newCol].isMine) {
           mineCount++
         }
