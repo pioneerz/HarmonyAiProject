@@ -151,12 +151,13 @@ struct SpeechRecognitionPage {
 
   createEngine() {
     let extraParam: Record<string, Object> = {
-      "locate": "CN",
-      "recognizerMode": "short"
+      "locate": "CN", // 区域信息, 当前支持"CN"
+      "recognizerMode": "short", // 语言模式, short/long ,默认“short”
+      "sysGeneralLexicon": ["测试", "热词"], // 系统热词
     }
     let initParamsInfo: speechRecognizer.CreateEngineParams = {
-      language: "zh-CN",
-      online: 1,
+      language: "zh-CN", // 语种, 当前仅支持"zh_CN"
+      online: 1, // 模式， 1为离线,当前仅支持离线模式
       extraParams: extraParam
     }
     speechRecognizer.createEngine(initParamsInfo,

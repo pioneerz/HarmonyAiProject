@@ -4,13 +4,16 @@ import { MainHeader } from '../header/MainHeader'
 
 /**
  * 文字转语音
+ * 支持的语种类型：中文、英文。（简体中文、繁体中文、中文语境下的英文）
+支持的音色类型：聆小珊女声音色、英语（美国）劳拉女声音色、凌飞哲男声音色。
+文本长度：不超过10000字数。
  */
 @Entry
 @Component
 struct TextToSpeechPage {
   ttsEngine?: textToSpeech.TextToSpeechEngine
   originalText: string =
-    "你好，[p500]，着[=zhe1]手，《科创板日报》6月4日讯（编辑 宋子乔） AI制药公司英矽智能的在研药Rentosertib有了新突破。6月3日，[h1]Rentosertib[h0]的IIa期临床研究结果被刊登于全球顶尖学术期刊《自然•医学》（Nature Medicine）。IIa期数据初步验证了该药物分子的安全性和有效性，Rentosertib成为目前全世界进展最快的AI药物。"
+    "你好，《科创板日报》6月4日讯（编辑 宋子乔） AI制药公司英矽智能的在研药Rentosertib有了新突破。6月3日，[h1]Rentosertib[h0]的II期临床研究结果被刊登于全球顶尖学术期刊《自然•医学》（Nature Medicine）。II期数据初步验证了该药物分子的安全性和有效性，Rentosertib成为目前全世界进展最快的AI药物。"
 
   aboutToDisappear(): void {
     this.ttsEngine?.shutdown()
@@ -38,7 +41,6 @@ struct TextToSpeechPage {
             })
             .onChange((value: string) => {
               this.originalText = value;
-              console.info(`original text: ${this.originalText}`);
             })
 
           Button("CreateEngine")
@@ -50,8 +52,6 @@ struct TextToSpeechPage {
             .height(50)
             .margin(10)
             .onClick(() => {
-              // this.createCount++;
-              // console.info(`CreateTtsEngine：createCount:${this.createCount}`);
               this.createTextEngine();
             })
 
@@ -64,7 +64,6 @@ struct TextToSpeechPage {
             .height(50)
             .margin(10)
             .onClick(() => {
-              // this.createCount++;
               this.speakText();
             })
 
@@ -77,7 +76,7 @@ struct TextToSpeechPage {
             .height(50)
             .margin(10)
             .onClick(() => {
-              this.listVoicesCallback();
+              this.listVoicesCallback()
             })
 
           Button("Stop")
@@ -90,7 +89,7 @@ struct TextToSpeechPage {
             .margin(10)
             .onClick(() => {
               // 停止播报
-              this.ttsEngine?.stop();
+              this.ttsEngine?.stop()
             })
 
           Button("isBusy")
@@ -129,15 +128,16 @@ struct TextToSpeechPage {
 
   createTextEngine() {
     let extraParam: Record<string, Object> = {
-      "style": 'interaction-broadcast',
-      "locate": 'CN',
-      "name": 'EngineName'
+      "style": 'interaction-broadcast', // 广播风格
+      "locate": 'CN', //  区域信息
+      "name": 'EngineName' // 引擎名称
+      // "isBackStage":false // 是否支持后台播报
     }
     let initParamsInfo: textToSpeech.CreateEngineParams = {
-      language: "zh-CN",
-      person: 0,
-      online: 1,
-      extraParams: extraParam
+      language: "zh-CN", // 支持语言，中文(zh_CN)/英文(en_US)
+      person: 0, // 音色
+      online: 1, // 模式, 0为在线, 1为离线
+      extraParams: extraParam //
     }
     textToSpeech.createEngine(initParamsInfo, (err: BusinessError, data: textToSpeech.TextToSpeechEngine) => {
       if (!err) {
@@ -180,11 +180,11 @@ struct TextToSpeechPage {
     this.addSpeakListener()
     let extraParam: Record<string, Object> = {
       "queueMode": 0, // 播报模式(0:排队模式播报，1:抢占模式播报)
-      "speed": 1, // 语速
-      "volume": 2, // 音量
-      "pitch": 1, // 音调
+      "speed": 1, // 语速,[0.5-2], 默认1
+      "volume": 2, // 音量,[0-2], 默认1
+      "pitch": 1, // 音调,[0.5-2], 默认1
       "languageContext": 'zh-CN', // 语境
-      "audioType": "pcm", // 音频类型
+      "audioType": "pcm", // 音频类型, 当前仅支持pcm类型
       "soundChannel": 3, // 播报通道
       "playType": 1 // 合成类型(0:合成不播报，返回音频流， 1:合成播报，不返回音频流)
     }
